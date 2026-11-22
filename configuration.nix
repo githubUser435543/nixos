@@ -1,34 +1,28 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ ./packages.nix ];
 
-  boot.loader.systemd-boot.enable = lib.mkDefault true;
-  boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
-
-  networking.hostName = "BarakObama";
   networking.networkmanager = {
-    enable = true;
+    enable = lib.mkDefault true;
     plugins = [ pkgs.networkmanager-openconnect pkgs.networkmanager-openvpn ];
   };
-  networking.firewall.enable = true;
+  networking.firewall.enable = lib.mkDefault true;
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth.enable = lib.mkDefault true;
   hardware.graphics.extraPackages = [
     pkgs.intel-compute-runtime
     pkgs.intel-media-driver
   ];
-  services.fwupd.enable = true;
 
-  services.tlp.enable = true;
-  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = lib.mkDefault (!config.services.power-profiles-daemon.enable);
 
-  security.rtkit.enable = true;
+  security.rtkit.enable = lib.mkDefault true;
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
+    enable = lib.mkDefault true;
+    alsa.enable = lib.mkDefault (!config.services.pulseaudio.enable);
+    pulse.enable = lib.mkDefault (!config.services.pulseaudio.enable);
+    wireplumber.enable = lib.mkDefault true;
   };
 
   programs.sway.enable = true;
@@ -37,7 +31,7 @@
   services.flatpak.enable = true;
   virtualisation.docker = {
     enable = true;
-    enableOnBoot = false;
+    enableOnBoot = lib.mkDefault false;
     daemon.settings.runtimes.runsc.path = lib.getExe' pkgs.gvisor "runsc";
   };
   programs.wireshark = {
@@ -45,15 +39,6 @@
     package = pkgs.wireshark;
   };
 
-  # Set this to your preferred login before installing.
-  users.users.ethan = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
-  };
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
-
-  # Initial NixOS release for this machine. Keep this across upgrades.
-  system.stateVersion = "26.05";
 }
