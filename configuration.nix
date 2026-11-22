@@ -25,7 +25,19 @@
     wireplumber.enable = lib.mkDefault true;
   };
 
-  programs.sway.enable = true;
+  programs.sway = {
+    enable = true;
+    extraSessionCommands = ''
+      export XCURSOR_THEME=Adwaita
+      export XCURSOR_SIZE=24
+      export XCURSOR_PATH="${pkgs.adwaita-icon-theme}/share/icons''${XCURSOR_PATH:+:$XCURSOR_PATH}"
+    '';
+  };
+  environment.etc."sway/config".source = pkgs.runCommand "framework-sway-config" { } ''
+    substitute ${config.programs.sway.package}/etc/sway/config "$out" \
+      --replace-fail 'set $mod Mod4' 'set $mod Mod1'
+    echo 'seat * xcursor_theme Adwaita 24' >> "$out"
+  '';
 
   fonts.packages = [ pkgs.dejavu_fonts ];
   services.flatpak.enable = true;
