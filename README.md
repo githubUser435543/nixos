@@ -38,6 +38,19 @@ screen if your display manager lists it, or log in on a text console and run
 `sway`. If you bring over a custom Sway config, include `/etc/sway/config.d/*`
 for screen sharing and session integration.
 
+## Edit, rebuild, and commit
+
+```sh
+./edit.sh configuration.nix
+./edit.sh packages.nix
+```
+
+Each command opens the selected file in Neovim. When you save and exit, the
+script runs `./setup.sh switch` if the file differs from the last commit. A
+successful switch creates a local commit for that file only. If the switch
+fails, your edits stay in the working tree so you can fix them and retry.
+The rebuild uses the current checkout, including any other local changes.
+
 ## Arch package migration
 
 - `packages.nix` declares the apps and command-line tools. The system modules
