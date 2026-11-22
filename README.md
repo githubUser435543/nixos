@@ -18,10 +18,11 @@ cd nixos
 
 If Git is missing, run `nix-shell -p git` before cloning.
 
-The script imports `/etc/nixos/configuration.nix` and adds the Framework
-profile and packages. It uses your existing disk mounts, bootloader, login,
-hostname, and `system.stateVersion`. If your current install uses a different
-configuration module, pass its path with
+The script builds `framework12`. It imports `/etc/nixos/configuration.nix`,
+including its hardware module, to reuse your bootloader, disk mounts, swap,
+and existing `system.stateVersion`. The profile sets the hostname to
+`BarakObama` and declares the `ethan` account in `flake.nix`.
+If your installation uses a different configuration module, pass its path with
 `NIXOS_BASE_CONFIG=/path/to/configuration.nix ./setup.sh`. If your existing
 flake supplies extra inputs or module arguments, integrate the profile modules
 into that flake so those inputs stay available.

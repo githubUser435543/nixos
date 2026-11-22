@@ -61,7 +61,7 @@ if [[ ! -f "$base_config" ]]; then
   exit 1
 fi
 
-flake="path:$repo_dir#framework12-existing"
+flake="path:$repo_dir#framework12"
 if [[ "$action" == build ]]; then
   exec env NIXOS_BASE_CONFIG="$base_config" nixos-rebuild build --impure --flake "$flake"
 fi

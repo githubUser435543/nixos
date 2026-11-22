@@ -7,39 +7,26 @@
     nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, nixos-hardware, ... }:
-    let
-      framework = nixos-hardware.nixosModules.framework-12-13th-gen-intel;
-    in {
-      nixosConfigurations = {
-        framework12 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            framework
-            ./hardware-configuration.nix
-            ./configuration.nix
-            ({ lib, ... }: {
-              boot.loader.systemd-boot.enable = lib.mkDefault true;
-              boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
+  outputs = { nixpkgs, nixos-hardware, ... }: {
+    nixosConfigurations.framework12 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        nixos-hardware.nixosModules.framework-12-13th-gen-intel
+        ./existing-configuration.nix
+        ./configuration.nix
+        ({ lib, ... }: {
+          # Apply the profile hostname over the hostname set by the installer.
+          networking.hostName = lib.mkOverride 90 "BarakObama";
 
-              networking.hostName = "BarakObama";
+          users.users.ethan = {
+            isNormalUser = true;
+            extraGroups = [ "wheel" "networkmanager" ];
+          };
 
-              # Login for the standalone configuration.
-              users.users.ethan = {
-                isNormalUser = true;
-                extraGroups = [ "wheel" "networkmanager" ];
-              };
-
-              # Initial NixOS release for this machine. Keep this across upgrades.
-              system.stateVersion = "26.05";
-            })
-          ];
-        };
-
-        framework12-existing = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ framework ./existing-configuration.nix ./configuration.nix ];
-        };
-      };
+          # Preserve the installed stateVersion when it is set.
+          system.stateVersion = lib.mkDefault "26.05";
+        })
+      ];
     };
+  };
 }
