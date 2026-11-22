@@ -6,7 +6,7 @@
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
-  networking.hostName = "framework12";
+  networking.hostName = "BarakObama";
   networking.networkmanager = {
     enable = true;
     plugins = [ pkgs.networkmanager-openconnect pkgs.networkmanager-openvpn ];
@@ -46,7 +46,7 @@
   };
 
   # Set this to your preferred login before installing.
-  users.users.laptop = {
+  users.users.ethan = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
   };

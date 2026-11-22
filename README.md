@@ -2,8 +2,7 @@
 
 NixOS 26.05 for the x86_64 Framework Laptop 12 with 13th-generation Intel
 graphics and firmware support. The configuration uses Sway, PipeWire, Bluetooth,
-NetworkManager, TLP, and the NixOS firewall. Docker is available on demand with
-gVisor registered as the optional `runsc` runtime. The desktop starts with Sway's
+NetworkManager, TLP, and the NixOS firewall. The desktop starts with Sway's
 default settings.
 
 ## Install
