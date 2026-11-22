@@ -102,7 +102,6 @@
     wget
     which
     whois
-    (callPackage ./whowatch.nix { })
     wiremix
     wl-clipboard
     wpscan
