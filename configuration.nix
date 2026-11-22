@@ -3,9 +3,6 @@
 {
   imports = [ ./packages.nix ];
 
-  # Use the Framework profile hostname over the installer setting.
-  networking.hostName = lib.mkOverride 90 "BarakObama";
-
   networking.networkmanager = {
     enable = lib.mkDefault true;
     plugins = [ pkgs.networkmanager-openconnect pkgs.networkmanager-openvpn ];
