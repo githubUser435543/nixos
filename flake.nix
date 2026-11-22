@@ -22,8 +22,6 @@
               boot.loader.systemd-boot.enable = lib.mkDefault true;
               boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
-              networking.hostName = "BarakObama";
-
               # Login for the standalone configuration.
               users.users.ethan = {
                 isNormalUser = true;
