@@ -38,6 +38,14 @@ screen if your display manager lists it, or log in on a text console and run
 `sway`. If you bring over a custom Sway config, include `/etc/sway/config.d/*`
 for screen sharing and session integration.
 
+## Neovim configuration
+
+Run `./setup.sh` as your regular user. After a successful switch, it clones
+[your Neovim config](https://github.com/githubUser435543/nvim-config) into
+`~/.config/nvim` (or `$XDG_CONFIG_HOME/nvim`). Neovim loads the checkout
+automatically. Setup leaves an existing config directory or symlink in place.
+Make changes and pull updates in the Neovim checkout.
+
 ## Edit, rebuild, and commit
 
 ```sh

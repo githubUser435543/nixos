@@ -33,7 +33,7 @@ fi
 
 edited_hash=$(git hash-object --no-filters -- "$file")
 if ! ./setup.sh switch; then
-  printf 'NixOS switch failed. Your edits are still in %s.\n' "$file" >&2
+  printf 'Setup did not complete. Your edits are still in %s.\n' "$file" >&2
   exit 1
 fi
 

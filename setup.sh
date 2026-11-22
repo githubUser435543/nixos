@@ -32,4 +32,12 @@ flake="path:$repo_dir#framework12-existing"
 if [[ "$action" == build ]]; then
   exec env NIXOS_BASE_CONFIG="$base_config" nixos-rebuild build --impure --flake "$flake"
 fi
-exec sudo env NIXOS_BASE_CONFIG="$base_config" nixos-rebuild "$action" --impure --flake "$flake"
+sudo env NIXOS_BASE_CONFIG="$base_config" nixos-rebuild "$action" --impure --flake "$flake"
+
+if [[ "$action" == switch && "$EUID" != 0 ]]; then
+  nvim_config="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
+  if [[ ! -e "$nvim_config" && ! -L "$nvim_config" ]]; then
+    mkdir -p -- "$(dirname -- "$nvim_config")"
+    git clone https://github.com/githubUser435543/nvim-config.git "$nvim_config"
+  fi
+fi
