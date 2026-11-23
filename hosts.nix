@@ -1,6 +1,6 @@
 {
   networking.hosts = {
-     "10.129.189.179" = [ "zentara.htb" "platform.zentara.htb" ];
+     "10.129.190.90" = [ "zentara.htb" "platform.zentara.htb" ];
 
   };
 }
