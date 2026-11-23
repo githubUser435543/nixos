@@ -49,6 +49,10 @@ in
     echo 'seat * xcursor_theme Adwaita 24' >> "$out"
   '';
 
+  environment.etc."sway/config.d/50-touchpad.conf".text = ''
+    input type:touchpad tap enabled
+  '';
+
   programs.chromium = {
     enable = true;
     extraOpts.BookmarkBarEnabled = true;
