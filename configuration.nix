@@ -68,6 +68,8 @@ in
     };
   };
 
+  services.netbird.enable = true;
+
   systemd.user.services.generate-ssh-key = {
     description = "Generate an Ed25519 SSH key when no user key exists";
     wantedBy = [ "default.target" ];
