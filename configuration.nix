@@ -127,6 +127,12 @@ in
     pkgs.gruvbox-kvantum
   ];
   environment.pathsToLink = [ "/share/Kvantum" ];
+  programs.dconf = {
+    enable = true;
+    profiles.user.databases = [
+      { settings."org/gnome/desktop/interface".color-scheme = "prefer-dark"; }
+    ];
+  };
   environment.etc."xdg/gtk-3.0/settings.ini".text = gtkSettings;
   environment.etc."xdg/gtk-4.0/settings.ini".text = gtkSettings;
   environment.etc."xdg/Kvantum/kvantum.kvconfig".text = ''
