@@ -59,6 +59,14 @@ automatically. Run `./setup.sh nvim` to install it without a system rebuild.
 Setup fills an empty config directory and preserves existing files and symlinks.
 Make changes and pull updates in the Neovim checkout.
 
+## SSH key
+
+When the `ethan` user session starts, NixOS creates an Ed25519 key without a
+passphrase in `~/.ssh/id_ed25519` if there is no existing SSH identity in `~/.ssh`.
+After applying the configuration, run
+`systemctl --user start generate-ssh-key.service` to check immediately. Add
+`~/.ssh/id_ed25519.pub` to GitHub if you want to use the generated key there.
+
 ## Edit, rebuild, and commit
 
 ```sh

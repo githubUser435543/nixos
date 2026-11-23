@@ -62,6 +62,48 @@ in
     };
   };
 
+  systemd.user.services.generate-ssh-key = {
+    description = "Generate an Ed25519 SSH key when no user key exists";
+    wantedBy = [ "default.target" ];
+    unitConfig.ConditionUser = "ethan";
+    serviceConfig.Type = "oneshot";
+    path = with pkgs; [ coreutils openssh util-linux ];
+
+    script = ''
+      umask 077
+      ssh_dir="$HOME/.ssh"
+      key_path="$ssh_dir/id_ed25519"
+      mkdir -p -- "$ssh_dir"
+
+      exec 9<"$ssh_dir"
+      flock 9
+
+      if [[ -e "$key_path" || -L "$key_path" || -e "$key_path.pub" || -L "$key_path.pub" ]]; then
+        exit 0
+      fi
+
+      shopt -s nullglob dotglob globstar
+      for candidate in "$ssh_dir"/**/*; do
+        case "''${candidate##*/}" in
+          authorized_keys*|known_hosts*) continue ;;
+        esac
+        [[ -f "$candidate" && -r "$candidate" ]] || continue
+
+        if ssh-keygen -lf "$candidate" </dev/null >/dev/null 2>&1; then
+          exit 0
+        fi
+
+        # Encrypted legacy PEM keys may have no readable public counterpart.
+        IFS= read -r header < "$candidate" || continue
+        case "$header" in
+          '-----BEGIN '*PRIVATE' KEY-----') exit 0 ;;
+        esac
+      done
+
+      ssh-keygen -q -t ed25519 -N "" -C "jacobwesson@proton.me" -f "$key_path" </dev/null
+    '';
+  };
+
   programs.foot = {
     enable = true;
     settings = {
