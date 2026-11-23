@@ -72,6 +72,7 @@ After applying the configuration, run
 ```sh
 ./edit.sh configuration.nix
 ./edit.sh packages.nix
+./edit.sh hosts.nix
 ```
 
 Each command opens the selected file in Neovim. When you save and exit, the

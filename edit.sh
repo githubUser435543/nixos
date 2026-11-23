@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  printf 'Usage: %s {configuration.nix|packages.nix}\n' "${0##*/}"
+  printf 'Usage: %s {configuration.nix|packages.nix|hosts.nix}\n' "${0##*/}"
 }
 
 if (( $# != 1 )); then
@@ -14,6 +14,7 @@ case "$1" in
   -h|--help) usage; exit 0 ;;
   configuration|configuration.nix) file=configuration.nix ;;
   packages|packages.nix) file=packages.nix ;;
+  hosts|hosts.nix) file=hosts.nix ;;
   *) usage >&2; exit 2 ;;
 esac
 
