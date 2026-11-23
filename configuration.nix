@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./packages.nix
+    ./hosts.nix
     ./chromium-extensions.nix
   ];
 
