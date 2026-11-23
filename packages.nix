@@ -12,6 +12,7 @@
     btop
     burpsuite
     caido-desktop
+    codex
     crosspipe
     debugedit
     discord
