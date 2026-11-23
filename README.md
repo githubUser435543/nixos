@@ -76,8 +76,9 @@ After applying the configuration, run
 
 Each command opens the selected file in Neovim. When you save and exit, the
 script runs `./setup.sh switch` if the file differs from the last commit. A
-successful switch creates a local commit for that file only. If the switch
-fails, your edits stay in the working tree so you can fix them and retry.
+successful switch creates a local commit for that file only. Run `git push`
+to publish it. If the switch fails, your edits stay in the working tree so you
+can fix them and retry.
 The rebuild uses the current checkout, including any other local changes.
 
 ## Arch package migration

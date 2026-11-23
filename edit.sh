@@ -32,8 +32,8 @@ if [[ -z "$changed" ]]; then
 fi
 
 edited_hash=$(git hash-object --no-filters -- "$file")
-if ! ./setup.sh switch; then
-  printf 'Setup did not complete. Your edits are still in %s.\n' "$file" >&2
+if ! NIXOS_SETUP_NVIM=0 ./setup.sh switch; then
+  printf 'NixOS switch failed. Your edits are still in %s.\n' "$file" >&2
   exit 1
 fi
 
@@ -41,4 +41,9 @@ if [[ "$(git hash-object --no-filters -- "$file")" != "$edited_hash" ]]; then
   printf '%s changed during the rebuild. Run the script again to rebuild and commit.\n' "$file" >&2
   exit 1
 fi
-git commit --only -m "Update $file" -- "$file"
+if git commit --only -m "Update $file" -- "$file"; then
+  printf 'Created a local Git commit. Run git push to publish it.\n'
+else
+  printf 'NixOS switched successfully, but Git could not commit %s. Your edits are still in place.\n' "$file" >&2
+  exit 1
+fi

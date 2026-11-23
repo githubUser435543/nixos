@@ -67,6 +67,6 @@ if [[ "$action" == build ]]; then
 fi
 sudo env NIXOS_BASE_CONFIG="$base_config" nixos-rebuild "$action" --impure --flake "$flake"
 
-if [[ "$action" == switch ]]; then
+if [[ "$action" == switch && "${NIXOS_SETUP_NVIM:-1}" != 0 ]]; then
   setup_nvim
 fi
