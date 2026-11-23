@@ -49,6 +49,11 @@ in
     echo 'seat * xcursor_theme Adwaita 24' >> "$out"
   '';
 
+  programs.chromium = {
+    enable = true;
+    extraOpts.BookmarkBarEnabled = true;
+  };
+
   programs.foot = {
     enable = true;
     settings = {
