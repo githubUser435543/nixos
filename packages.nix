@@ -56,6 +56,7 @@
     minisign
     mpop
     neovim
+    netbird
     netcat-openbsd
     netexec
     nfs-utils
