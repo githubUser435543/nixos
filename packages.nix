@@ -53,6 +53,7 @@
     ltrace
     m4
     man-db
+    man-pages
     metasploit
     minisign
     mpop
