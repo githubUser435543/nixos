@@ -169,4 +169,5 @@ in
   nixpkgs.config.allowUnfree = true;
 
   environment.ldso32 = "${pkgs.pkgsi686Linux.glibc}/lib/ld-linux.so.2";
+  programs.nix-ld.enable = true;
 }
