@@ -1,7 +1,17 @@
 { config, lib, pkgs, ... }:
 
+let
+  gtkSettings = ''
+    [Settings]
+    gtk-theme-name=Gruvbox-Dark
+    gtk-application-prefer-dark-theme=true
+  '';
+in
 {
-  imports = [ ./packages.nix ];
+  imports = [
+    ./packages.nix
+    ./chromium-extensions.nix
+  ];
 
   networking.networkmanager = {
     enable = lib.mkDefault true;
@@ -38,6 +48,35 @@
       --replace-fail 'set $mod Mod4' 'set $mod Mod1'
     echo 'seat * xcursor_theme Adwaita 24' >> "$out"
   '';
+
+  programs.foot = {
+    enable = true;
+    settings = {
+      main.font = "monospace:size=16";
+      bell = {
+        system = false;
+        urgent = false;
+        notify = false;
+        visual = false;
+      };
+    };
+  };
+
+  environment.systemPackages = [
+    (pkgs.gruvbox-gtk-theme.override { colorVariants = [ "dark" ]; })
+    pkgs.gruvbox-kvantum
+  ];
+  environment.pathsToLink = [ "/share/Kvantum" ];
+  environment.etc."xdg/gtk-3.0/settings.ini".text = gtkSettings;
+  environment.etc."xdg/gtk-4.0/settings.ini".text = gtkSettings;
+  environment.etc."xdg/Kvantum/kvantum.kvconfig".text = ''
+    [General]
+    theme=Gruvbox-Dark-Brown
+  '';
+  qt = {
+    enable = true;
+    style = "kvantum";
+  };
 
   fonts.packages = [ pkgs.dejavu_fonts ];
   services.flatpak.enable = true;

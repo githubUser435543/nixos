@@ -94,7 +94,9 @@
     texliveBasic
     thc-hydra
     tmux
-    (ungoogled-chromium.override { commandLineArgs = "--force-dark-mode"; })
+    (ungoogled-chromium.override {
+      commandLineArgs = "--force-dark-mode --extension-mime-request-handling=always-prompt-for-install";
+    })
     unzip
     upx
     valgrind
