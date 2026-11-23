@@ -94,6 +94,7 @@
     texliveBasic
     thc-hydra
     tmux
+    glibc.static
     (ungoogled-chromium.override {
       commandLineArgs = "--force-dark-mode --extension-mime-request-handling=always-prompt-for-install";
     })
