@@ -1,9 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
+  gtkTheme = "Gruvbox-Dark";
   gtkSettings = ''
     [Settings]
-    gtk-theme-name=Gruvbox-Dark
+    gtk-theme-name=${gtkTheme}
     gtk-application-prefer-dark-theme=true
   '';
 in
@@ -130,9 +131,15 @@ in
   programs.dconf = {
     enable = true;
     profiles.user.databases = [
-      { settings."org/gnome/desktop/interface".color-scheme = "prefer-dark"; }
+      {
+        settings."org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = gtkTheme;
+        };
+      }
     ];
   };
+  environment.sessionVariables.GTK_THEME = lib.mkDefault gtkTheme;
   environment.etc."xdg/gtk-3.0/settings.ini".text = gtkSettings;
   environment.etc."xdg/gtk-4.0/settings.ini".text = gtkSettings;
   environment.etc."xdg/Kvantum/kvantum.kvconfig".text = ''
