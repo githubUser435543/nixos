@@ -33,7 +33,6 @@
     gcc
     gettext
     ghidra
-    git
     gnumake
     gvisor
     hashcat

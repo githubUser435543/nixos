@@ -54,6 +54,14 @@ in
     extraOpts.BookmarkBarEnabled = true;
   };
 
+  programs.git = {
+    enable = true;
+    config.user = {
+      name = "Jacob Wesson";
+      email = "jacobwesson@proton.me";
+    };
+  };
+
   programs.foot = {
     enable = true;
     settings = {
