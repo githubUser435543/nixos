@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     _7zz
+    audit
     autoconf
     automake
     awscli2
