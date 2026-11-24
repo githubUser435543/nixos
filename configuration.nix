@@ -139,6 +139,20 @@ in
     defaultApplications."inode/directory" = [ "ranger-foot.desktop" ];
   };
 
+  systemd.user.services.ranger-directory-default = {
+    description = "Set Ranger as the default directory handler";
+    wantedBy = [ "sway-session.target" ];
+    unitConfig.ConditionUser = "ethan";
+    serviceConfig.Type = "oneshot";
+    path = [ pkgs.coreutils pkgs.xdg-utils ];
+    script = ''
+      if [ "$(xdg-mime query default inode/directory)" != ranger-foot.desktop ]; then
+        mkdir -p -- "''${XDG_CONFIG_HOME:-$HOME/.config}"
+        xdg-mime default ranger-foot.desktop inode/directory
+      fi
+    '';
+  };
+
   environment.systemPackages = [
     (pkgs.makeDesktopItem {
       name = "ranger-foot";
