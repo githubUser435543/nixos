@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
-
+ 
 let
   gtkTheme = "Gruvbox-Dark";
   gtkSettings = ''
