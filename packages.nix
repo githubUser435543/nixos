@@ -7,6 +7,7 @@
     autoconf
     automake
     awscli2
+    biber
     binutils
     binwalk
     bison
