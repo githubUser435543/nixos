@@ -13,6 +13,7 @@ in
     ./packages.nix
     ./hosts.nix
     ./chromium-extensions.nix
+    ./i3status.nix
   ];
 
   networking.networkmanager = {
@@ -47,7 +48,9 @@ in
   };
   environment.etc."sway/config".source = pkgs.runCommand "framework-sway-config" { } ''
     substitute ${config.programs.sway.package}/etc/sway/config "$out" \
-      --replace-fail 'set $mod Mod4' 'set $mod Mod1'
+      --replace-fail 'set $mod Mod4' 'set $mod Mod1' \
+      --replace-fail "status_command while date +'%Y-%m-%d %X'; do sleep 1; done" \
+        'status_command ${lib.getExe pkgs.i3status} -c /etc/i3status.conf'
     echo 'seat * xcursor_theme Adwaita 24' >> "$out"
   '';
 
