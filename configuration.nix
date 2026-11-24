@@ -128,7 +128,20 @@ in
     };
   };
 
+  environment.sessionVariables._JAVA_AWT_WM_NONREPARENTING = "1";
+
+  xdg.mime = {
+    enable = true;
+    defaultApplications."inode/directory" = [ "ranger-foot.desktop" ];
+  };
+
   environment.systemPackages = [
+    (pkgs.makeDesktopItem {
+      name = "ranger-foot";
+      desktopName = "Ranger";
+      exec = "${lib.getExe config.programs.foot.package} -- ${lib.getExe pkgs.ranger} %f";
+      mimeTypes = [ "inode/directory" ];
+    })
     (pkgs.gruvbox-gtk-theme.override { colorVariants = [ "dark" ]; })
     pkgs.gruvbox-kvantum
   ];
