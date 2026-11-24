@@ -108,6 +108,9 @@
     (texliveBasic.withPackages (ps: [
       ps.enumitem
       ps.latexmk
+      ps.marvosym
+      ps.preprint
+      ps.titlesec
     ]))
     thc-hydra
     tmux
