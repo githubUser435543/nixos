@@ -39,7 +39,7 @@ screen if your display manager lists it, or log in on a text console and run
 `sway`. If you bring over a custom Sway config, include `/etc/sway/config.d/*`
 for screen sharing and session integration. The system Sway config uses Alt
 (`Mod1`) and the Adwaita cursor. The bar shows workspaces and status information
-with the system tray hidden. Press Ctrl+Alt+S to select a rectangle and save it
+with the system tray hidden. Press Shift+Alt+S to select a rectangle and save it
 under `~/Pictures/Screenshots` (or `$XDG_PICTURES_DIR/Screenshots` if set).
 A personal Sway config takes precedence.
 

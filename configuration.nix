@@ -65,7 +65,7 @@ in
   '';
 
   environment.etc."sway/config.d/50-screenshot.conf".text = ''
-    bindsym Ctrl+$mod+s exec ${screenshotSelection}
+    bindsym Shift+$mod+s exec ${screenshotSelection}
   '';
 
   environment.etc."sway/config.d/50-touchpad.conf".text = ''
