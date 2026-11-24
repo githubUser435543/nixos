@@ -23,7 +23,11 @@ in
     ./hosts.nix
     ./chromium-extensions.nix
     ./i3status.nix
+    ./ranger-file-picker.nix
   ];
+
+  # Use Eastern Time even when the installer set a different timezone.
+  time.timeZone = lib.mkOverride 90 "America/New_York";
 
   networking.networkmanager = {
     enable = lib.mkDefault true;
