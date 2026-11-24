@@ -236,4 +236,19 @@ in
 
   environment.ldso32 = "${pkgs.pkgsi686Linux.glibc}/lib/ld-linux.so.2";
   programs.nix-ld.enable = true;
+
+  programs.ghidra = {
+    enable = true;
+    gdb = true;
+
+    package = pkgs.symlinkJoin {
+      name = "ghidra-dark";
+      paths = [ pkgs.ghidra ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram "$out/bin/ghidra" \
+          --prefix JAVA_TOOL_OPTIONS ' ' '-DTheme=Class:generic.theme.builtin.FlatDarkTheme'
+      '';
+    };
+  };
 }
