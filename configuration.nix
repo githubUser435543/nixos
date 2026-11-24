@@ -1,6 +1,15 @@
 { config, lib, pkgs, ... }:
 
 let
+  screenshotSelection = pkgs.writeShellScript "screenshot-selection" ''
+    set -e
+    selection="$("${lib.getExe pkgs.slurp}")" || exit 0
+    directory="''${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
+    "${pkgs.coreutils}/bin/mkdir" -p -- "$directory"
+    timestamp="$("${pkgs.coreutils}/bin/date" +%Y-%m-%d_%H-%M-%S-%N)"
+    exec "${lib.getExe pkgs.grim}" -g "$selection" "$directory/$timestamp.png"
+  '';
+
   gtkTheme = "Gruvbox-Dark";
   gtkSettings = ''
     [Settings]
@@ -48,10 +57,15 @@ in
   };
   environment.etc."sway/config".source = pkgs.runCommand "framework-sway-config" { } ''
     substitute ${config.programs.sway.package}/etc/sway/config "$out" \
+      --replace-fail 'bar {' $'bar {\n    tray_output none' \
       --replace-fail 'set $mod Mod4' 'set $mod Mod1' \
       --replace-fail "status_command while date +'%Y-%m-%d %X'; do sleep 1; done" \
         'status_command ${lib.getExe pkgs.i3status} -c /etc/i3status.conf'
     echo 'seat * xcursor_theme Adwaita 24' >> "$out"
+  '';
+
+  environment.etc."sway/config.d/50-screenshot.conf".text = ''
+    bindsym Ctrl+$mod+s exec ${screenshotSelection}
   '';
 
   environment.etc."sway/config.d/50-touchpad.conf".text = ''
@@ -131,6 +145,11 @@ in
       };
     };
   };
+
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    dolphin
+    dolphin-plugins
+  ];
 
   environment.sessionVariables._JAVA_AWT_WM_NONREPARENTING = "1";
 
