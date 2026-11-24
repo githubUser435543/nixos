@@ -68,6 +68,10 @@ in
     bindsym Shift+$mod+s exec ${screenshotSelection}
   '';
 
+  environment.etc."sway/config.d/50-mouse.conf".text = ''
+    input type:pointer left_handed enabled
+  '';
+
   environment.etc."sway/config.d/50-touchpad.conf".text = ''
     input type:touchpad tap enabled
   '';
