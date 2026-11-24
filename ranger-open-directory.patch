@@ -1,0 +1,35 @@
+--- a/src/open-uri.c
++++ b/src/open-uri.c
+@@ -733,7 +733,13 @@
+           g_autofree char* item_uri = g_filename_to_uri (real_path, NULL, NULL);
+           g_autoptr(GDBusConnection) bus = NULL;
+
+-          bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &local_error);
++          g_autoptr(GAppInfo) directory_app =
++            g_app_info_get_default_for_type ("inode/directory", FALSE);
++          gboolean ranger_is_default = directory_app != NULL &&
++            g_strcmp0 (g_app_info_get_id (directory_app), "ranger-foot.desktop") == 0;
++
++          if (!ranger_is_default)
++            bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &local_error);
+
+           uris_builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
+           g_variant_builder_add (uris_builder, "s", item_uri);
+@@ -751,7 +757,7 @@
+                                                   NULL,
+                                                   &local_error);
+
+-          if (result == NULL)
++          if (local_error != NULL)
+             {
+               if (g_error_matches (local_error, G_DBUS_ERROR,
+                                    G_DBUS_ERROR_NAME_HAS_NO_OWNER) ||
+@@ -762,7 +768,7 @@
+                 g_warning ("Failed to call " FILE_MANAGER_SHOW_ITEMS ": %s",
+                            local_error->message);
+             }
+-          else
++          else if (result != NULL)
+             {
+               xdp_dbus_request_emit_response (XDP_DBUS_REQUEST (request),
+                                               XDG_DESKTOP_PORTAL_RESPONSE_SUCCESS,

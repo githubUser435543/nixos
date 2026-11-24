@@ -139,6 +139,15 @@ in
     defaultApplications."inode/directory" = [ "ranger-foot.desktop" ];
   };
 
+  # Let portal OpenDirectory requests use the Ranger MIME default.
+  nixpkgs.overlays = [
+    (_: prev: {
+      xdg-desktop-portal = prev.xdg-desktop-portal.overrideAttrs (old: {
+        patches = old.patches ++ [ ./ranger-open-directory.patch ];
+      });
+    })
+  ];
+
   systemd.user.services.ranger-directory-default = {
     description = "Set Ranger as the default directory handler";
     wantedBy = [ "sway-session.target" ];

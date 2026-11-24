@@ -14,7 +14,7 @@
     order += "cpu_usage"
     order += "memory"
     order += "disk /"
-    order += "battery 0"
+    order += "battery all"
     order += "tztime local"
 
     wireless _first_ {
@@ -45,7 +45,7 @@
         threshold_type = percentage_avail
     }
 
-    battery 0 {
+    battery all {
         format = "%status %percentage %remaining"
         format_down = "No battery"
         status_chr = "Charging"

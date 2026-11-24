@@ -35,7 +35,15 @@
     gcc
     gettext
     gh
-    ghidra
+    (symlinkJoin {
+      name = "ghidra-dark";
+      paths = [ ghidra ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram "$out/bin/ghidra" \
+          --prefix JAVA_TOOL_OPTIONS ' ' '-DTheme=Class:generic.theme.builtin.FlatDarkTheme'
+      '';
+    })
     gnumake
     gvisor
     hashcat
