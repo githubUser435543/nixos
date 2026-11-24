@@ -34,6 +34,7 @@
     fzf
     gcc
     gettext
+    gh
     ghidra
     gnumake
     gvisor
