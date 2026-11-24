@@ -33,6 +33,7 @@
     flex
     fzf
     gcc
+    gdb
     gettext
     gh
     (symlinkJoin {
