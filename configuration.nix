@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
-
+ 
 let
   screenshotSelection = pkgs.writeShellScript "screenshot-selection" ''
     set -e
