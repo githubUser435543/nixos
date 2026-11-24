@@ -122,6 +122,6 @@
     wl-clipboard
     wpscan
     zathura
-    (python3.withPackages (ps: with ps; [ pwntools pyx scapy ]))
+    (python3.withPackages (ps: with ps; [ pwntools pyx scapy protobuf ]))
   ];
 }
