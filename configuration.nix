@@ -241,6 +241,10 @@ in
   environment.ldso32 = "${pkgs.pkgsi686Linux.glibc}/lib/ld-linux.so.2";
   programs.nix-ld.enable = true;
 
+  environment.etc."gdb/gdbinit.d/50-intel-syntax.gdb".text = ''
+    set disassembly-flavor intel
+  '';
+
   programs.ghidra = {
     enable = true;
     gdb = true;
