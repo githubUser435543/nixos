@@ -104,7 +104,7 @@
     sshpass
     strace
     tcpdump
-    texliveBasic
+    (texliveBasic.withPackages (ps: [ ps.latexmk ]))
     thc-hydra
     tmux
     glibc.static
