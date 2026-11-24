@@ -117,8 +117,12 @@ in
 
   programs.foot = {
     enable = true;
+    theme = "gruvbox";
     settings = {
-      main.font = "monospace:size=16";
+      main = {
+        font = "monospace:size=16";
+        initial-color-theme = "dark";
+      };
       bell = {
         system = false;
         urgent = false;

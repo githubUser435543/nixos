@@ -40,9 +40,10 @@ screen if your display manager lists it, or log in on a text console and run
 for screen sharing and session integration. The system Sway config uses Alt
 (`Mod1`) and the Adwaita cursor. A personal Sway config takes precedence.
 
-Foot uses a 16-point monospace font with the bell disabled. GTK uses
-Gruvbox Dark, and Qt uses Gruvbox Dark Brown through Kvantum. Personal
-Foot and toolkit settings can take precedence over the system defaults.
+The desktop advertises a dark-mode preference to applications. Foot starts in
+Gruvbox Dark with a 16-point monospace font and the bell disabled. Ranger uses
+Foot's colors. GTK uses Gruvbox Dark, and Qt uses Gruvbox Dark Brown through
+Kvantum. Personal app and toolkit settings can take precedence.
 
 Ungoogled Chromium starts in dark mode and loads Chromium Web Store,
 uBlock Origin Lite, Wappalyzer, FoxyProxy Standard, and Bitwarden from
